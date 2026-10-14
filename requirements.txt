@@ -1,0 +1,6 @@
+langgraph
+langchain-groq
+langchain-google-genai
+langchain-tavily
+python-dotenv
+typing-extensions

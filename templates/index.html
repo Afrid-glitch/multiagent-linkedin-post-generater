@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Create polished LinkedIn posts with AI."
+    >
+
+    <title>LinkedIn Post Generator</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='style.css') }}"
+    >
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <header class="topbar">
+            <a class="brand" href="/" aria-label="LinkedIn Post Generator home">
+                <span class="brand-mark" aria-hidden="true">L</span>
+
+                <span class="brand-copy">
+                    <strong>Postcraft</strong>
+                    <span>LinkedIn Studio</span>
+                </span>
+            </a>
+
+            <div class="topbar-status" aria-label="System status">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span>AI workspace</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <section class="intro" aria-labelledby="page-title">
+                <div class="eyebrow">
+                    <span class="eyebrow-line" aria-hidden="true"></span>
+                    CONTENT WORKSPACE
+                </div>
+
+                <h1 id="page-title">
+                    Turn an idea into a post<br>
+                    <span>worth publishing.</span>
+                </h1>
+
+                <p class="intro-copy">
+                    Give the AI your idea. It will draft, review, and refine
+                    your LinkedIn post before presenting the final version.
+                </p>
+            </section>
+
+            <section class="workspace" aria-label="Post generation workspace">
+
+                <article class="composer-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <span class="section-index">01</span>
+                            <h2>Start with an idea</h2>
+                        </div>
+
+                        <span class="keyboard-hint">
+                            <kbd>⌘</kbd>
+                            <kbd>↵</kbd>
+                        </span>
+                    </div>
+
+                    <form id="generatorForm" novalidate>
+                        <div class="field">
+                            <label for="topic">What do you want to write about?</label>
+
+                            <div class="textarea-wrap">
+                                <textarea
+                                    id="topic"
+                                    name="topic"
+                                    rows="7"
+                                    maxlength="2000"
+                                    autocomplete="off"
+                                    spellcheck="true"
+                                    placeholder="Share an idea, lesson, opinion, project, or insight..."
+                                    aria-describedby="topicHint characterCount"
+                                    required
+                                ></textarea>
+
+                                <div class="textarea-footer">
+                                    <span id="topicHint">
+                                        The more context you provide, the more specific the draft can be.
+                                    </span>
+
+                                    <span id="characterCount" aria-live="polite">
+                                        0 / 2,000
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="composer-actions">
+                            <div class="action-note">
+                                <span class="spark" aria-hidden="true">✦</span>
+                                Draft + review included
+                            </div>
+
+                            <button
+                                id="generateBtn"
+                                class="primary-button"
+                                type="submit"
+                            >
+                                <span class="button-label">Generate post</span>
+                                <span class="button-arrow" aria-hidden="true">↗</span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div
+                        id="loading"
+                        class="loading-state hidden"
+                        role="status"
+                        aria-live="polite"
+                    >
+                        <span class="loader" aria-hidden="true"></span>
+
+                        <div>
+                            <strong>Working on your post</strong>
+                            <span>Drafting and reviewing the content...</span>
+                        </div>
+                    </div>
+                </article>
+
+                <aside class="process-panel" aria-label="Generation process">
+                    <div class="process-label">HOW IT WORKS</div>
+
+                    <ol class="process-list">
+                        <li class="process-item">
+                            <span class="process-number">01</span>
+                            <div>
+                                <strong>Understand</strong>
+                                <p>Your idea becomes the brief.</p>
+                            </div>
+                        </li>
+
+                        <li class="process-item">
+                            <span class="process-number">02</span>
+                            <div>
+                                <strong>Write</strong>
+                                <p>A focused LinkedIn draft is created.</p>
+                            </div>
+                        </li>
+
+                        <li class="process-item">
+                            <span class="process-number">03</span>
+                            <div>
+                                <strong>Review</strong>
+                                <p>The draft is checked before delivery.</p>
+                            </div>
+                        </li>
+                    </ol>
+
+                    <div class="process-footer">
+                        <span class="mini-check" aria-hidden="true">✓</span>
+                        Ready when you are
+                    </div>
+                </aside>
+            </section>
+
+            <section
+                id="resultSection"
+                class="result-section hidden"
+                aria-labelledby="resultTitle"
+            >
+                <div class="result-heading">
+                    <div>
+                        <div class="section-kicker">
+                            <span class="section-index">02</span>
+                            OUTPUT
+                        </div>
+
+                        <h2 id="resultTitle">Your generated post</h2>
+                    </div>
+
+                    <div class="result-status">
+                        <span class="status-dot" aria-hidden="true"></span>
+                        <span id="status">Approved</span>
+                    </div>
+                </div>
+
+                <article class="result-panel">
+                    <div class="result-toolbar">
+                        <span class="toolbar-label">FINAL DRAFT</span>
+
+                        <button
+                            id="copyBtn"
+                            class="copy-button"
+                            type="button"
+                            aria-label="Copy generated post"
+                        >
+                            <span class="copy-icon" aria-hidden="true">□</span>
+                            <span id="copyLabel">Copy</span>
+                        </button>
+                    </div>
+
+                    <div
+                        id="postOutput"
+                        class="post-output"
+                        tabindex="0"
+                        aria-label="Generated LinkedIn post"
+                    ></div>
+
+                    <footer class="result-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">Generation attempts</span>
+                            <strong id="attempts">—</strong>
+                        </div>
+
+                        <div class="meta-divider" aria-hidden="true"></div>
+
+                        <div class="meta-item">
+                            <span class="meta-label">Review status</span>
+                            <strong id="metaStatus">—</strong>
+                        </div>
+
+                        <div class="meta-spacer"></div>
+
+                        <span class="result-note">
+                            Review the copy before publishing.
+                        </span>
+                    </footer>
+                </article>
+            </section>
+
+            <div
+                id="error"
+                class="error-message hidden"
+                role="alert"
+                aria-live="assertive"
+            >
+                <span class="error-icon" aria-hidden="true">!</span>
+                <span id="errorText"></span>
+                <button
+                    id="dismissError"
+                    class="dismiss-button"
+                    type="button"
+                    aria-label="Dismiss error"
+                >
+                    ×
+                </button>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <span>Postcraft</span>
+            <span class="footer-separator">·</span>
+            <span>AI-assisted writing workspace</span>
+        </footer>
+    </div>
+
+    <script
+        src="{{ url_for('static', path='script.js') }}"
+    ></script>
+</body>
+</html>
+
